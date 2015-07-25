@@ -1,0 +1,81 @@
+/*
+ * Copyright (C) 2013-2015 2048FX 
+ * Jose Pereda, Bruno Borges & Jens Deters
+ * All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.javafxports:jfxmobile-plugin:1.0.0-b10'
+    }
+}
+
+apply plugin: 'org.javafxports.jfxmobile'
+apply plugin: 'eclipse'
+
+repositories {
+    jcenter()
+	mavenCentral()
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+}
+
+ext.CHARM_DOWN_VERSION = "0.0.3-SNAPSHOT"
+
+dependencies {
+	// using jfxtras would have been nice. But it's not supported yet by javafxports. So jfxtras src code for the necessary component is included
+	compile 'org.javafxports:dalvik-sdk:8u60-b4'
+	compile 'org.javafxports:jfxdvk:8u60-b4'
+	compile files("${ANDROID_SDK}\\platforms\\android-21\\android.jar")
+    compile "com.gluonhq:charm-down-common:$CHARM_DOWN_VERSION"
+    //
+	desktopRuntime "com.gluonhq:charm-down-desktop:$CHARM_DOWN_VERSION"
+	//compile "com.gluonhq:charm-down-desktop:$CHARM_DOWN_VERSION"
+	//
+    androidRuntime "com.gluonhq:charm-down-android:$CHARM_DOWN_VERSION"
+    iosCompile "org.robovm:robovm-cocoatouch:1.0.0"
+    iosRuntime "com.gluonhq:charm-down-ios:$CHARM_DOWN_VERSION"
+}
+
+mainClassName = 'org.facewindu.breastfeedingbuddy.BreastFeedingBuddyFX'
+
+jfxmobile {
+	javafxportsVersion='8u60-b4'
+    ios {
+        forceLinkClasses = [ 'org.facewindu.breastfeedingbuddy.**.*', 'com.gluonhq.charm.down.**.*' ]
+    }
+    
+    android {
+		androidSdk = "${ANDROID_SDK}"
+        signingConfig {
+            storeFile file("${DEBUG_KEYSTORE}")
+//            File propsFile = file("C:\\Java\\keystore.properties");
+//            if (propsFile.exists()) {
+//                Properties props = new Properties();
+//                props.load(new FileInputStream(propsFile))
+//                storePassword props.getProperty('RELEASE_STORE_PASSWORD')
+//                keyAlias props.getProperty('RELEASE_KEY_ALIAS')
+//                keyPassword props.getProperty('RELEASE_KEY_PASSWORD')
+//            }
+        }
+        manifest = 'lib/android/AndroidManifest.xml'
+    }    
+}
+
