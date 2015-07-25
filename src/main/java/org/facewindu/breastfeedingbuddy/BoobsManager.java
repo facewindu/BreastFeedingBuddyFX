@@ -129,10 +129,15 @@ public class BoobsManager extends Group {
 		toolbar.getChildren().addAll(about, quit);
 
 		// deal with overlay
+		// overlay is always filling the listView
 		overlayProperty = new SimpleBooleanProperty(false);
 		overlay = new VBox();
 		overlay.setAlignment(Pos.CENTER);
-		overlay.setTranslateY(BUTTON_HEIGHT);
+		overlay.getStyleClass().add("overlay");
+		overlay.layoutXProperty().bind(listView.layoutXProperty());
+		overlay.layoutYProperty().bind(listView.layoutYProperty());
+		overlay.prefWidthProperty().bind(listView.widthProperty());
+		overlay.prefHeightProperty().bind(listView.heightProperty());
 		toolbar.disableProperty().bind(overlayProperty);
 		leftBoob.disableProperty().bind(overlayProperty);
 		rightBoob.disableProperty().bind(overlayProperty);
@@ -180,9 +185,13 @@ public class BoobsManager extends Group {
 		LocalDateTimePicker localdateTimePicker = new LocalDateTimePicker(feed.getStartFeedingTime());
 		Button save = new Button("Save Edit");
 		Button cancel = new Button("Cancel Edit");
-		vbox.getChildren().add(new Label("Boob:"));
+		Label boobLbl = new Label("Boob:");
+		boobLbl.getStyleClass().add("label");
+		vbox.getChildren().add(boobLbl);
 		vbox.getChildren().add(boobBox);
-		vbox.getChildren().add(new Label("FeedingTime: "));
+		Label feedingTimeLbl = new Label("FeedingTime: ");
+		feedingTimeLbl.getStyleClass().add("label");
+		vbox.getChildren().add(feedingTimeLbl);
 		vbox.getChildren().add(localdateTimePicker);
 		vbox.getChildren().add(new HBox(save, cancel));
 		save.setOnAction(evt -> {
@@ -242,14 +251,15 @@ public class BoobsManager extends Group {
 	 */
 	private void createAboutOverlay() {
 		VBox vbox = new VBox();
+		vbox.setAlignment(Pos.CENTER);
 		overlay.getChildren().setAll(vbox);
 
 		Button goBack = new Button("Go Back");
 		TextFlow flow = new TextFlow();
 		flow.setTextAlignment(TextAlignment.CENTER);
 		flow.setPadding(new Insets(10, 0, 0, 0));
-		Text t0 = new Text("BreastFedding Buddy FX\n");
-		Text t1 = new Text("JavaFX game - " + PlatformFactory.getPlatform().getName() + " version\n\n");
+		Text t0 = new Text("BreastFeeding Buddy FX\n");
+		Text t1 = new Text("JavaFX app - " + PlatformFactory.getPlatform().getName() + " version\n\n");
 
 		Text t2 = new Text("Powered by ");
 		Hyperlink link1 = new Hyperlink();
@@ -257,7 +267,7 @@ public class BoobsManager extends Group {
 		link1.setOnAction(e -> {
 			PlatformService.getInstance().launchURL("http://javafxports.org/page/home");
 		});
-		Text t21 = new Text(" Project \n");
+		Text t21 = new Text("\n");
 
 		Text t22 = new Text("Powered by ");
 		Hyperlink link2 = new Hyperlink();
@@ -265,7 +275,7 @@ public class BoobsManager extends Group {
 		link2.setOnAction(e -> {
 			PlatformService.getInstance().launchURL("http://jfxtras.org/");
 		});
-		Text t23 = new Text(" Project \n\n");
+		Text t23 = new Text("\n\n");
 
 		Text t24 = new Text("\u00A9 ");
 		Hyperlink link3 = new Hyperlink();
@@ -279,7 +289,7 @@ public class BoobsManager extends Group {
 
 		flow.getChildren().setAll(t0, t1, t2, link1, t21, t22, link2, t23, t24, link3, t25, t31);
 		vbox.getChildren().add(flow);
-		vbox.getChildren().add(new HBox(goBack));
+		vbox.getChildren().add(goBack);
 
 		goBack.setOnAction(evt -> {
 			overlayProperty.set(false);

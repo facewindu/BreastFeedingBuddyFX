@@ -28,6 +28,7 @@ package org.facewindu.breastfeedingbuddy.view;
 
 import org.facewindu.breastfeedingbuddy.model.Feed;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -53,6 +54,8 @@ public class FeedCell extends ListCell<Feed> {
 			// image in the end)
 			Label boobLabel = new Label(feed.getBoob().toString().substring(0, 1));
 			Label dateTimeLabel = new Label(feed.getStartFeedingTimeString());
+			boobLabel.getStyleClass().addAll("label");
+			dateTimeLabel.getStyleClass().addAll("label");
 			Button editButton = new Button("", new ImageView(new Image(getClass().getResourceAsStream("edit.png"))));
 			editButton.setTooltip(new Tooltip("edit feed info"));
 			editButton.setOnAction(evt -> feed.editProperty().set(true));
@@ -64,6 +67,7 @@ public class FeedCell extends ListCell<Feed> {
 			HBox hFill = new HBox();
 			HBox.setHgrow(hFill, Priority.ALWAYS);
 			HBox hbox = new HBox(10, boobLabel, dateTimeLabel, hFill, buttonBox);
+			hbox.setAlignment(Pos.CENTER);
 			setGraphic(hbox);
 		}
 	}

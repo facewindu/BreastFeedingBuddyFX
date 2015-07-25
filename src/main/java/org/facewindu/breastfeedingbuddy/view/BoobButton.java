@@ -45,7 +45,9 @@ public abstract class BoobButton extends Button {
 		theBoob = aBoob;
 		theFeedingList = feedingList;
 		// setGraphic(theBoob.getImage());
-		setGraphic(new Label(theBoob.toString()));
+		Label boobLbl = new Label(theBoob.toString());
+		setGraphic(boobLbl);
+		boobLbl.getStyleClass().addAll("label");
 		setPrefSize(BoobsManager.BUTTON_HEIGHT, BoobsManager.BUTTON_HEIGHT);
 		setId(aBoob.toString());
 		setOnAction(evt -> {

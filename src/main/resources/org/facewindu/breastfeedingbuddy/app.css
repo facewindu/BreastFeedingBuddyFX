@@ -1,0 +1,50 @@
+/*
+ * Copyright (C) 2015-2015 BreastFeedingBuddyFX 
+ * Francois Guillot
+ * All rights reserved.
+ *
+ * This program is under the MIT License (see LICENSE file at root)
+ */
+
+.root {
+    -fx-background-color: #82C5BE; 
+}
+.label {
+    -fx-font-smoothing-type: lcd;
+    -fx-smooth: true;
+    -fx-font-family: 'Clear Sans Bold';
+}
+.hyperlink{
+	-fx-border-color: transparent;
+}
+.overlay {
+ 	-fx-background-color: #EFC09E;
+    -fx-border-color: #EFAF80;
+    -fx-opacity: 0.8;
+}
+.button { 
+    -fx-font-size: 15px;
+    -fx-background-color: #EFC09E;
+    -fx-border-color: #DF8F55; 
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-border-width: 2; 
+}
+.button:focused {
+	-fx-focus-color: transparent;
+    -fx-border-color: transparent;
+}
+.button:hover {
+    -fx-border-color: -fx-focus-color;
+    -fx-background-color: #EFAF80;
+}
+.list-cell:even {
+    -fx-background-color: #EFC09E;
+}
+.list-cell:odd {
+    -fx-background-color: #DF8F55;
+}
+.list-cell:focused{
+	-fx-focus-color: transparent;
+    -fx-border-color: transparent;
+}

@@ -77,7 +77,7 @@ public class BreastFeedingBuddyFX extends Application {
 		boobsManager = new BoobsManager();
 		bounds = boobsManager.getLayoutBounds();
 		root = new StackPane(boobsManager);
-		// root.getStyleClass().addAll("game-root");
+		root.getStyleClass().add("root");
 		ChangeListener<Number> resize = ((obs, oldValue, newValue) -> gameResize());
 		root.widthProperty().addListener(resize);
 		root.heightProperty().addListener(resize);
@@ -89,7 +89,7 @@ public class BreastFeedingBuddyFX extends Application {
 		} else {
 			scene = new Scene(root);
 		}
-		// scene.getStylesheets().add(getClass().getResource("game.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
 
 		if (PlatformFactory.getPlatform().getName().equals(PlatformFactory.DESKTOP) && isARMDevice()) {
 			primaryStage.setFullScreen(true);
