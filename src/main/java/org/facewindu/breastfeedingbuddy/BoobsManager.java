@@ -26,6 +26,8 @@
  */
 package org.facewindu.breastfeedingbuddy;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
 
 import org.facewindu.breastfeedingbuddy.model.Boob;
@@ -41,15 +43,18 @@ import com.gluonhq.charm.down.common.PlatformFactory;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -57,7 +62,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
-import jfxtras.scene.control.LocalDateTimePicker;
 
 /**
  * Core class of the application.<br>
@@ -108,7 +112,7 @@ public class BoobsManager extends Group {
 		vbox.getChildren().add(listView);
 
 		// Toolbar
-		toolbar = new HBox();
+		toolbar = new HBox(10);
 		toolbar.setAlignment(Pos.CENTER);
 		toolbar.setMinHeight(TOOLBAR_HEIGHT);
 		toolbar.setPrefHeight(TOOLBAR_HEIGHT);
@@ -181,22 +185,46 @@ public class BoobsManager extends Group {
 
 		ChoiceBox<Boob> boobBox = new ChoiceBox<>(FXCollections.observableArrayList(Boob.values()));
 		boobBox.getSelectionModel().select(feed.getBoob());
-		LocalDateTimePicker localdateTimePicker = new LocalDateTimePicker(feed.getStartFeedingTime());
 		Button save = new Button("Save Edit");
 		Button cancel = new Button("Cancel Edit");
+
 		Label boobLbl = new Label("Boob:");
 		boobLbl.getStyleClass().add("label");
 		vbox.getChildren().add(boobLbl);
 		vbox.getChildren().add(boobBox);
+
+		Label feedingDateLbl = new Label("FeedingDate: ");
+		feedingDateLbl.getStyleClass().add("label");
+		vbox.getChildren().add(feedingDateLbl);
+		DatePicker datePicker = new DatePicker(feed.getStartFeedingTime().toLocalDate());
+		vbox.getChildren().add(datePicker);
+
 		Label feedingTimeLbl = new Label("FeedingTime: ");
 		feedingTimeLbl.getStyleClass().add("label");
 		vbox.getChildren().add(feedingTimeLbl);
-		vbox.getChildren().add(localdateTimePicker);
+		Slider hourSlider = new Slider(0, 23, feed.getStartFeedingTime().getHour());
+		hourSlider.setBlockIncrement(1);
+		hourSlider.setSnapToTicks(true);
+		Label hrLbl = new Label();
+		hrLbl.getStyleClass().add("label");
+		Slider minuteSlider = new Slider(0, 59, feed.getStartFeedingTime().getMinute());
+		minuteSlider.setBlockIncrement(1);
+		minuteSlider.setSnapToTicks(true);
+		Label minLbl = new Label();
+		minLbl.getStyleClass().add("label");
+		vbox.getChildren().addAll(new HBox(hrLbl, hourSlider), new HBox(minLbl, minuteSlider));
+		SimpleIntegerProperty hrToInt = new SimpleIntegerProperty();
+		hrToInt.bind(hourSlider.valueProperty());
+		SimpleIntegerProperty minToInt = new SimpleIntegerProperty();
+		minToInt.bind(minuteSlider.valueProperty());
+		hrLbl.textProperty().bind(hrToInt.asString("%d h  :"));
+		minLbl.textProperty().bind(minToInt.asString("%d min:"));
+
 		vbox.getChildren().add(new HBox(save, cancel));
 		save.setOnAction(evt -> {
 			feedingList.remove(feed);
-			feedingList.add(
-					new Feed(boobBox.getSelectionModel().getSelectedItem(), localdateTimePicker.getLocalDateTime()));
+			feedingList.add(new Feed(boobBox.getSelectionModel().getSelectedItem(),
+					LocalDateTime.of(datePicker.getValue(), LocalTime.of(hrToInt.getValue(), minToInt.getValue()))));
 			// possibly the list shall be sorted
 			// FIXME Use Comparator.comparing when Dalvik JVM is compliant with
 			// JDK 1.8 (whenever, wherever)
