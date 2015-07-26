@@ -7,7 +7,7 @@
  */
 
 .root {
-    -fx-background-color: #82C5BE; 
+    -fx-background-color: #82B2CE; 
 }
 .label {
     -fx-font-smoothing-type: lcd;
@@ -22,21 +22,37 @@
     -fx-border-color: #EFAF80;
     -fx-opacity: 0.8;
 }
+.scroll-bar {
+	-fx-background-color: #EFC09E;
+}
+.scroll-bar .increment-button:hover , .scroll-bar .decrement-button:hover {
+	-fx-background-color: #82B2CE;
+}
+.scroll-bar .increment-button:pressed , .scroll-bar .decrement-button:pressed {
+	-fx-scale-x: 0.95;
+	-fx-scale-y:-fx-scale-x;
+}
+.scroll-bar .thumb {
+	-fx-background-color: #DF8F55;
+}
 .button { 
     -fx-font-size: 15px;
     -fx-background-color: #EFC09E;
     -fx-border-color: #DF8F55; 
-    -fx-background-radius: 3;
-    -fx-border-radius: 3;
-    -fx-border-width: 2; 
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-width: 2;
+    -fx-padding: 0;
+}
+.button:pressed {
+	-fx-scale-x: 0.8;
+	-fx-scale-y:-fx-scale-x;
 }
 .button:focused {
-	-fx-focus-color: transparent;
-    -fx-border-color: transparent;
+	-fx-focus-color: -fx-border-color;
 }
 .button:hover {
-    -fx-border-color: -fx-focus-color;
-    -fx-background-color: #EFAF80;
+    -fx-background-color: #82B2CE;
 }
 .list-cell:even {
     -fx-background-color: #EFC09E;
@@ -47,4 +63,7 @@
 .list-cell:focused{
 	-fx-focus-color: transparent;
     -fx-border-color: transparent;
+}
+.list-view:focused{
+	-fx-focus-color: transparent;
 }

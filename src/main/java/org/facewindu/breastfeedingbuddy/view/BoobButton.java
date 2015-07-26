@@ -33,7 +33,6 @@ import org.facewindu.breastfeedingbuddy.model.Boob;
 import org.facewindu.breastfeedingbuddy.model.FeedingList;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 
 public abstract class BoobButton extends Button {
@@ -44,10 +43,7 @@ public abstract class BoobButton extends Button {
 	public BoobButton(final Boob aBoob, final FeedingList feedingList) {
 		theBoob = aBoob;
 		theFeedingList = feedingList;
-		// setGraphic(theBoob.getImage());
-		Label boobLbl = new Label(theBoob.toString());
-		setGraphic(boobLbl);
-		boobLbl.getStyleClass().addAll("label");
+		setGraphic(theBoob.getImage());
 		setPrefSize(BoobsManager.BUTTON_HEIGHT, BoobsManager.BUTTON_HEIGHT);
 		setId(aBoob.toString());
 		setOnAction(evt -> {

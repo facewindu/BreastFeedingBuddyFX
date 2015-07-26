@@ -68,7 +68,7 @@ public class BoobsManager extends Group {
 
 	public static final int TOOLBAR_HEIGHT = 40;
 
-	public static final int BUTTON_HEIGHT = 120;
+	public static final int BUTTON_HEIGHT = 130;
 
 	private final VBox vbox;
 
@@ -98,7 +98,6 @@ public class BoobsManager extends Group {
 		leftBoob = new LeftBoobButton(feedingList);
 		rightBoob = new RightBoobButton(feedingList);
 		boobsBox = new HBox(10, leftBoob, rightBoob);
-		boobsBox.setPadding(new Insets(5, 20, 5, 20));
 		boobsBox.setAlignment(Pos.CENTER);
 		vbox.getChildren().add(boobsBox);
 
@@ -258,36 +257,58 @@ public class BoobsManager extends Group {
 		TextFlow flow = new TextFlow();
 		flow.setTextAlignment(TextAlignment.CENTER);
 		flow.setPadding(new Insets(10, 0, 0, 0));
-		Text t0 = new Text("BreastFeeding Buddy FX\n");
-		Text t1 = new Text("JavaFX app - " + PlatformFactory.getPlatform().getName() + " version\n\n");
+		Text t00 = new Text("BreastFeeding Buddy FX\n");
+		Text t10 = new Text("JavaFX app - " + PlatformFactory.getPlatform().getName() + " version\n\n");
 
-		Text t2 = new Text("Powered by ");
-		Hyperlink link1 = new Hyperlink();
-		link1.setText("JavaFXPorts");
-		link1.setOnAction(e -> {
-			PlatformService.getInstance().launchURL("http://javafxports.org/page/home");
+		Text t20 = new Text("Powered by ");
+		Hyperlink t21 = new Hyperlink();
+		t21.setText("JavaFXPorts");
+		t21.setOnAction(e -> {
+			PlatformService.getInstance().launchURL("http://javafxports.org/page/home/");
 		});
-		Text t21 = new Text("\n");
+		Text t22 = new Text("\n");
 
-		Text t22 = new Text("Powered by ");
-		Hyperlink link2 = new Hyperlink();
-		link2.setText("JFXTras");
-		link2.setOnAction(e -> {
+		Text t30 = new Text("Powered by ");
+		Hyperlink t31 = new Hyperlink();
+		t31.setText("JFXTras");
+		t31.setOnAction(e -> {
 			PlatformService.getInstance().launchURL("http://jfxtras.org/");
 		});
-		Text t23 = new Text("\n\n");
+		Text t32 = new Text("\n");
 
-		Text t24 = new Text("\u00A9 ");
-		Hyperlink link3 = new Hyperlink();
-		link3.setText("Facewindu");
-		link3.setOnAction(e -> {
+		Text t40 = new Text("Base icons by ");
+		Hyperlink t41 = new Hyperlink();
+		t41.setText("Freepik");
+		t41.setOnAction(e -> {
+			PlatformService.getInstance().launchURL("http://www.flaticon.com/authors/freepik/");
+		});
+		Text t42 = new Text("\n");
+
+		Text t50 = new Text("Font by ");
+		Hyperlink t51 = new Hyperlink();
+		t51.setText("Larry Yerkes");
+		t51.setOnAction(e -> {
+			PlatformService.getInstance().launchURL("http://www.facebook.com/wolfbainx/");
+		});
+		Text t52 = new Text("\n");
+
+		Text t100 = new Text("\n\u00A9 ");
+		Hyperlink t101 = new Hyperlink();
+		t101.setText("Facewindu");
+		t101.setOnAction(e -> {
 			PlatformService.getInstance().launchURL("https://github.com/facewindu/");
 		});
-		Text t25 = new Text("\n\n");
+		Text t102 = new Text("\n\n");
 
-		Text t31 = new Text(" Version " + BreastFeedingBuddyFX.VERSION + " - 2015\n\n");
+		Text t110 = new Text(" Version " + BreastFeedingBuddyFX.VERSION + " - 2015\n\n");
 
-		flow.getChildren().setAll(t0, t1, t2, link1, t21, t22, link2, t23, t24, link3, t25, t31);
+		flow.getChildren().setAll(t00, t10);
+		flow.getChildren().addAll(t20, t21, t22);
+		flow.getChildren().addAll(t30, t31, t32);
+		flow.getChildren().addAll(t40, t41, t42);
+		flow.getChildren().addAll(t50, t51, t52);
+		flow.getChildren().addAll(t100, t101, t102);
+		flow.getChildren().addAll(t110);
 		vbox.getChildren().add(flow);
 		vbox.getChildren().add(goBack);
 
