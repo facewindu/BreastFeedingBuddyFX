@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2015, François Guillot
+ * Copyright (c) 2015-2015, Francois Guillot
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
