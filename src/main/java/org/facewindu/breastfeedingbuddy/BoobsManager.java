@@ -296,21 +296,13 @@ public class BoobsManager extends Group {
 		});
 		Text t22 = new Text("\n");
 
-		Text t30 = new Text("Powered by ");
+		Text t30 = new Text("Base icons by ");
 		Hyperlink t31 = new Hyperlink();
-		t31.setText("JFXTras");
+		t31.setText("Freepik");
 		t31.setOnAction(e -> {
-			PlatformService.getInstance().launchURL("http://jfxtras.org/");
-		});
-		Text t32 = new Text("\n");
-
-		Text t40 = new Text("Base icons by ");
-		Hyperlink t41 = new Hyperlink();
-		t41.setText("Freepik");
-		t41.setOnAction(e -> {
 			PlatformService.getInstance().launchURL("http://www.flaticon.com/authors/freepik/");
 		});
-		Text t42 = new Text("\n");
+		Text t32 = new Text("\n");
 
 		Text t50 = new Text("Font by ");
 		Hyperlink t51 = new Hyperlink();
@@ -333,7 +325,6 @@ public class BoobsManager extends Group {
 		flow.getChildren().setAll(t00, t10);
 		flow.getChildren().addAll(t20, t21, t22);
 		flow.getChildren().addAll(t30, t31, t32);
-		flow.getChildren().addAll(t40, t41, t42);
 		flow.getChildren().addAll(t50, t51, t52);
 		flow.getChildren().addAll(t100, t101, t102);
 		flow.getChildren().addAll(t110);
