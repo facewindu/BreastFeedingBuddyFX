@@ -15,9 +15,10 @@
         android:allowBackup="true"
         android:debuggable="false"
         android:icon="@mipmap/ic_launcher"
-        android:label="BreastFeedingBuddyFX" >
+        android:label="BreastFeedingBuddyFX">
         <activity
             android:name="javafxports.android.FXActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize"
             android:label="BreastFeedingBuddyFX" >
             <meta-data
