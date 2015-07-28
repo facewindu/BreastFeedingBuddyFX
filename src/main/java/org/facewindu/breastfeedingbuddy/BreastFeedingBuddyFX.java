@@ -85,10 +85,13 @@ public class BreastFeedingBuddyFX extends Application {
 		final Scene scene;
 		if (PlatformFactory.getPlatform().getName().equals(PlatformFactory.ANDROID)) {
 			Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+			boobsManager.getListView().setMinWidth(visualBounds.getWidth());
+			boobsManager.getVbox().setMinWidth(visualBounds.getWidth());
 			scene = new Scene(root, visualBounds.getWidth(), visualBounds.getHeight());
 		} else {
 			scene = new Scene(root);
 		}
+
 		scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
 
 		if (PlatformFactory.getPlatform().getName().equals(PlatformFactory.DESKTOP) && isARMDevice()) {

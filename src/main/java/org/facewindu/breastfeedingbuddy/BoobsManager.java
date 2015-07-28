@@ -43,7 +43,6 @@ import com.gluonhq.charm.down.common.PlatformFactory;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -54,7 +53,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
+import javafx.scene.control.Spinner;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -101,14 +100,13 @@ public class BoobsManager extends Group {
 		// Button box
 		leftBoob = new LeftBoobButton(feedingList);
 		rightBoob = new RightBoobButton(feedingList);
-		boobsBox = new HBox(10, leftBoob, rightBoob);
+		boobsBox = new HBox(50, leftBoob, rightBoob);
 		boobsBox.setAlignment(Pos.CENTER);
 		vbox.getChildren().add(boobsBox);
 
 		// ListView
 		listView = new ListView<>(feedingList);
 		listView.setCellFactory(list -> new FeedCell());
-		listView.prefWidthProperty().bind(boobsBox.widthProperty());
 		vbox.getChildren().add(listView);
 
 		// Toolbar
@@ -118,7 +116,6 @@ public class BoobsManager extends Group {
 		toolbar.setPrefHeight(TOOLBAR_HEIGHT);
 		toolbar.setMaxHeight(TOOLBAR_HEIGHT);
 		toolbar.setPadding(new Insets(5, 20, 5, 20));
-		toolbar.prefWidthProperty().bind(boobsBox.widthProperty());
 		vbox.getChildren().add(toolbar);
 		Button about = new Button("", new ImageView(new Image(getClass().getResourceAsStream("about.png"))));
 		about.setOnAction(evt -> {
@@ -153,6 +150,14 @@ public class BoobsManager extends Group {
 
 		// restore previously saved session
 		restoreSession();
+	}
+
+	public VBox getVbox() {
+		return vbox;
+	}
+
+	public ListView<Feed> getListView() {
+		return listView;
 	}
 
 	/**
@@ -202,29 +207,22 @@ public class BoobsManager extends Group {
 		Label feedingTimeLbl = new Label("FeedingTime: ");
 		feedingTimeLbl.getStyleClass().add("label");
 		vbox.getChildren().add(feedingTimeLbl);
-		Slider hourSlider = new Slider(0, 23, feed.getStartFeedingTime().getHour());
-		hourSlider.setBlockIncrement(1);
-		hourSlider.setSnapToTicks(true);
-		Label hrLbl = new Label();
+		Spinner<Integer> hrSpinner = new Spinner<>(0, 59, feed.getStartFeedingTime().getHour());
+		hrSpinner.setEditable(false);
+		hrSpinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
+		Label hrLbl = new Label("Hour:    ");
 		hrLbl.getStyleClass().add("label");
-		Slider minuteSlider = new Slider(0, 59, feed.getStartFeedingTime().getMinute());
-		minuteSlider.setBlockIncrement(1);
-		minuteSlider.setSnapToTicks(true);
-		Label minLbl = new Label();
+		Spinner<Integer> minSpinner = new Spinner<>(0, 59, feed.getStartFeedingTime().getMinute());
+		minSpinner.setEditable(false);
+		minSpinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
+		Label minLbl = new Label("Minutes: ");
 		minLbl.getStyleClass().add("label");
-		vbox.getChildren().addAll(new HBox(hrLbl, hourSlider), new HBox(minLbl, minuteSlider));
-		SimpleIntegerProperty hrToInt = new SimpleIntegerProperty();
-		hrToInt.bind(hourSlider.valueProperty());
-		SimpleIntegerProperty minToInt = new SimpleIntegerProperty();
-		minToInt.bind(minuteSlider.valueProperty());
-		hrLbl.textProperty().bind(hrToInt.asString("%d h  :"));
-		minLbl.textProperty().bind(minToInt.asString("%d min:"));
-
+		vbox.getChildren().addAll(new HBox(hrLbl, hrSpinner), new HBox(minLbl, minSpinner));
 		vbox.getChildren().add(new HBox(save, cancel));
 		save.setOnAction(evt -> {
 			feedingList.remove(feed);
-			feedingList.add(new Feed(boobBox.getSelectionModel().getSelectedItem(),
-					LocalDateTime.of(datePicker.getValue(), LocalTime.of(hrToInt.getValue(), minToInt.getValue()))));
+			feedingList.add(new Feed(boobBox.getSelectionModel().getSelectedItem(), LocalDateTime
+					.of(datePicker.getValue(), LocalTime.of(hrSpinner.getValue(), minSpinner.getValue()))));
 			// possibly the list shall be sorted
 			// FIXME Use Comparator.comparing when Dalvik JVM is compliant with
 			// JDK 1.8 (whenever, wherever)
